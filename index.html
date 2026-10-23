@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>SNSブレイク</title>
+  <meta name="description" content="SNSを開こうとした瞬間を、やりたいことの時間に。">
+  <meta name="theme-color" content="#F5F3EE">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="SNSブレイク">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 初回設定 -->
+  <section class="screen" id="setup" hidden>
+    <div class="body">
+      <p class="eyebrow">はじめに</p>
+      <h1 class="title"><span class="nw">SNSを開きたくなった</span><span class="nw">瞬間を、</span><br><span class="nw">やりたいことの</span><span class="nw">時間に。</span></h1>
+      <label class="field">
+        <span class="label">やりたいこと</span>
+        <input id="setup-goal" type="text" maxlength="20" value="読書" autocomplete="off" enterkeyhint="done">
+      </label>
+      <p class="hint">例：読書、英単語、ストレッチ、日記</p>
+    </div>
+    <div class="actions">
+      <button class="btn primary" id="setup-save">これではじめる</button>
+    </div>
+  </section>
+
+  <!-- ホーム -->
+  <section class="screen" id="home" hidden>
+    <header class="topbar">
+      <span class="brand">SNSブレイク</span>
+      <button class="link" id="home-settings">設定</button>
+    </header>
+    <div class="body">
+      <p class="eyebrow">今週、SNSから奪った時間</p>
+      <p class="big" id="home-total"></p>
+      <p class="sub" id="home-goal"></p>
+    </div>
+    <div class="actions">
+      <button class="btn primary" id="home-start"></button>
+      <button class="btn ghost" id="home-report">今週のレポート</button>
+    </div>
+  </section>
+
+  <!-- ちょっと待った -->
+  <section class="screen" id="wait" hidden>
+    <div class="body">
+      <p class="eyebrow" id="wait-app"></p>
+      <h1 class="headline">ちょっと待った！</h1>
+      <p class="lead" id="wait-question"></p>
+    </div>
+    <div class="actions">
+      <button class="btn primary" id="wait-start">はじめる</button>
+      <button class="btn ghost" id="wait-open"></button>
+    </div>
+  </section>
+
+  <!-- ストップウォッチ -->
+  <section class="screen" id="timer" hidden>
+    <div class="body center">
+      <p class="eyebrow" id="timer-goal"></p>
+      <p class="clock" id="timer-clock">0:00</p>
+      <p class="sub" id="timer-note">1分から記録されます</p>
+    </div>
+    <div class="actions">
+      <button class="btn primary" id="timer-stop">停止</button>
+    </div>
+    <div class="sheet" id="timer-sheet" hidden>
+      <div class="sheet-inner">
+        <p class="sheet-title">もう少しだけ続けてみる？</p>
+        <p class="sub" id="timer-sheet-text"></p>
+        <button class="btn primary" id="timer-continue">続ける</button>
+        <button class="btn ghost" id="timer-quit">やめる</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 停止後 -->
+  <section class="screen" id="result" hidden>
+    <div class="body">
+      <p class="eyebrow" id="result-goal"></p>
+      <p class="big" id="result-min"></p>
+      <p class="headline small">SNSから時間を奪った</p>
+      <p class="sub" id="result-week"></p>
+    </div>
+    <div class="actions">
+      <button class="btn primary" id="result-report">今週のレポート</button>
+      <button class="btn ghost" id="result-close">とじる</button>
+    </div>
+  </section>
+
+  <!-- 週のレポート（9:16） -->
+  <section class="screen report-screen" id="report" hidden>
+    <div class="card" id="report-card">
+      <div class="card-head">
+        <p class="card-kicker">THIS WEEK</p>
+        <p class="card-range" id="report-range"></p>
+      </div>
+      <div class="card-main">
+        <p class="card-label">SNSから奪った時間</p>
+        <p class="card-big" id="report-total"></p>
+        <div class="bars" id="report-bars"></div>
+      </div>
+      <dl class="stats">
+        <div><dt>SNSを開こうとした</dt><dd id="report-attempts"></dd></div>
+        <div><dt id="report-did-label"></dt><dd id="report-did"></dd></div>
+        <div><dt>それでも開いた</dt><dd id="report-opened"></dd></div>
+      </dl>
+      <p class="card-foot" id="report-foot"></p>
+    </div>
+    <div class="report-controls" id="report-controls">
+      <button class="btn ghost" id="report-back">もどる</button>
+      <p class="hint">カードをタップするとボタンが隠れます。<br>スクショしてストーリーへ。</p>
+    </div>
+  </section>
+
+  <!-- 設定 -->
+  <section class="screen" id="settings" hidden>
+    <header class="topbar">
+      <button class="link" id="settings-back">‹ もどる</button>
+    </header>
+    <div class="body top">
+      <h1 class="title">設定</h1>
+      <label class="field">
+        <span class="label">やりたいこと</span>
+        <input id="settings-goal" type="text" maxlength="20" autocomplete="off" enterkeyhint="done">
+      </label>
+
+      <fieldset class="field">
+        <legend class="label">「それでも開く」の開き方</legend>
+        <label class="radio"><input type="radio" name="openMode" value="shortcut"> ショートカット経由（推奨）</label>
+        <label class="radio"><input type="radio" name="openMode" value="direct"> アプリを直接開く</label>
+        <p class="hint">直接開くと、オートメーションが再び動いてこの画面に戻ってきます。ショートカット経由なら一定時間スルーできます。</p>
+      </fieldset>
+
+      <label class="field" id="pass-field">
+        <span class="label">通過用ショートカットの名前</span>
+        <input id="settings-pass" type="text" maxlength="40" autocomplete="off" enterkeyhint="done">
+      </label>
+
+      <button class="btn danger" id="settings-reset">記録をすべて消す</button>
+    </div>
+    <div class="actions">
+      <button class="btn primary" id="settings-save">保存</button>
+    </div>
+  </section>
+
+  <div class="toast" id="toast" hidden></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
